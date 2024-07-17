@@ -3,12 +3,13 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ToDosPage from "./pages/ToDosPage/ToDosPage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [],
+    children: [{ path: "/", element: <ToDosPage /> }],
   },
 ]);
 
