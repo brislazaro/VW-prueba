@@ -4,3 +4,8 @@
   box-sizing: border-box;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
+
+:root {
+  --header-height: 60px;
+  --footer-height: 50px;
+}
