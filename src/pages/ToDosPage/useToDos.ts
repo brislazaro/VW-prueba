@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { ToDo } from "../../components/Types/Types";
 
 const useToDos = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState<ToDo[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -27,6 +28,7 @@ const useToDos = () => {
     isLoading,
     isError,
     data,
+    setData,
   };
 };
 export default useToDos;
