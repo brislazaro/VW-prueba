@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../redux/slices/postsSlice";
 import { RootState } from "../../redux/store";
 
-const usePosts = () => {
+const usePosts = (inputValue: string) => {
   const dispatch = useDispatch();
 
   const { isLoading, isError, data } = useSelector((state: RootState) => {
@@ -14,10 +14,16 @@ const usePosts = () => {
     dispatch(fetchPosts());
   }, []);
 
+  const filteredData = useMemo(() => {
+    return data.filter((item) => {
+      return item.title.toLowerCase().includes(inputValue.toLowerCase());
+    });
+  }, [data, inputValue]);
+
   return {
     isError,
     isLoading,
-    data,
+    data: filteredData,
   };
 };
 export default usePosts;

@@ -35,7 +35,9 @@ describe("Given a PostsPage component", () => {
 
       renderComponentFactory(<PostsPage />);
 
-      expect(screen.getByText("Error al cargar datos")).toBeInTheDocument();
+      expect(
+        screen.getByText("There has been an error loading the data")
+      ).toBeInTheDocument();
     });
   });
 
