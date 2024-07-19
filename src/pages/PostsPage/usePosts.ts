@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchToDos } from "../../redux/slices/toDosSlice";
+import { fetchPosts } from "../../redux/slices/postsSlice";
 import { RootState } from "../../redux/store";
 
-const useToDos = () => {
+const usePosts = () => {
   const dispatch = useDispatch();
 
-  const { isLoading, isError, toDos } = useSelector((state: RootState) => {
-    return state.toDos;
+  const { isLoading, isError, data } = useSelector((state: RootState) => {
+    return state.posts;
   });
 
   useEffect(() => {
-    dispatch(fetchToDos());
+    dispatch(fetchPosts());
   }, []);
 
   return {
     isError,
     isLoading,
-    data: toDos,
+    data,
   };
 };
-export default useToDos;
+export default usePosts;
