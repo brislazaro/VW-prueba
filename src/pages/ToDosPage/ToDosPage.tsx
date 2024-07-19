@@ -10,6 +10,7 @@ const ToDosPage = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      render: (title: string) => <p data-testId={"todo-item"}>{title}</p>,
     },
     {
       title: "Completed",
@@ -29,17 +30,21 @@ const ToDosPage = () => {
     },
   ];
 
-  if (isError) {
-    return <p className={styles.error}>Error al cargar datos</p>;
-  } else {
-    return (
-      <>
-        <h2 className={styles.title}>To Do´s Page</h2>
+  return (
+    <>
+      <h2 className={styles.title}>To Do´s Page</h2>
 
-        {}
-        <Table dataSource={data} columns={columns} loading={isLoading} />
-      </>
-    );
-  }
+      {isError ? (
+        <p className={styles.error}>Error al cargar datos</p>
+      ) : (
+        <Table
+          dataSource={data}
+          columns={columns}
+          loading={isLoading}
+          pagination={{ showSizeChanger: false, position: ["bottomCenter"] }}
+        />
+      )}
+    </>
+  );
 };
 export default ToDosPage;
