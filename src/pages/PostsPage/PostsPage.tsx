@@ -11,12 +11,16 @@ const PostPage = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      defaultSortOrder: "descend",
+      sorter: (a: Post, b: Post) => a.id - b.id,
       render: (title: string) => <p data-testId={"post-item"}>{title}</p>,
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      defaultSortOrder: "descend",
+      sorter: (a: Post, b: Post) => a.title.localeCompare(b.title),
     },
   ];
 
