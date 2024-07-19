@@ -1,0 +1,23 @@
+.title {
+  margin-bottom: 42px;
+}
+
+.completed {
+  color: rgb(10, 217, 10);
+  font-weight: 600;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border: 2px solid red;
+  border-radius: 5px;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 300px;
+  margin: 20px auto;
+  margin-top: 50px;
+}
