@@ -1,5 +1,5 @@
-export type Todo = {
-  completed: boolean;
+export type Post = {
+  body: string;
   id: number;
   title: string;
   userId: number;
