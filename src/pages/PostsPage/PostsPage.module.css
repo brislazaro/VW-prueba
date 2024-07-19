@@ -1,10 +1,14 @@
-.title {
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   margin-bottom: 24px;
 }
 
-.completed {
-  color: #00c040;
-  font-weight: 600;
+.title {
+  margin-bottom: 24px;
 }
 
 .error {
