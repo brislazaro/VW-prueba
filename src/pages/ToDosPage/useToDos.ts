@@ -1,33 +1,23 @@
-import { useEffect, useState } from "react";
-import { Todos } from "../../components/Types/Types";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchToDos } from "../../redux/slices/toDosSlice";
+import { RootState } from "../../redux/store";
 
 const useToDos = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [data, setData] = useState<Todos[]>([]);
+  const dispatch = useDispatch();
+
+  const { isLoading, isError, toDos } = useSelector((state: RootState) => {
+    return state.toDos;
+  });
 
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
-        const apiData = await response.json();
-        setData(apiData);
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+    dispatch(fetchToDos());
   }, []);
 
   return {
-    isLoading,
     isError,
-    data,
+    isLoading,
+    data: toDos,
   };
 };
 export default useToDos;
