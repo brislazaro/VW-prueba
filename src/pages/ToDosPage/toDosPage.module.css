@@ -1,9 +1,9 @@
 .title {
-  margin-bottom: 42px;
+  margin-bottom: 24px;
 }
 
 .completed {
-  color: rgb(10, 217, 10);
+  color: #00c040;
   font-weight: 600;
 }
 
@@ -20,4 +20,19 @@
   max-width: 300px;
   margin: 20px auto;
   margin-top: 50px;
+}
+
+.rowWhite {
+  background-color: white;
+}
+
+.rowGray {
+  background-color: #fafafa;
+}
+
+.checkbox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

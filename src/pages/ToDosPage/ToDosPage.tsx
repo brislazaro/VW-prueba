@@ -1,6 +1,8 @@
 import useToDos from "./useToDos";
 import { Table } from "antd";
 import styles from "./toDosPage.module.css";
+import { Todo } from "../../components/Types/Types";
+import { Checkbox } from "antd";
 
 const ToDosPage = () => {
   const { isLoading, isError, data } = useToDos();
@@ -22,13 +24,19 @@ const ToDosPage = () => {
             {completed ? (
               <p className={styles.completed}>Completed</p>
             ) : (
-              <p>Not completed</p>
+              <div className={styles.checkbox}>
+                <Checkbox />
+              </div>
             )}
           </>
         );
       },
     },
   ];
+
+  const rowClassName = (_: Todo, index: number) => {
+    return index % 2 === 0 ? styles.rowWhite : styles.rowGray;
+  };
 
   return (
     <>
@@ -42,6 +50,7 @@ const ToDosPage = () => {
           columns={columns}
           loading={isLoading}
           pagination={{ showSizeChanger: false, position: ["bottomCenter"] }}
+          rowClassName={rowClassName}
         />
       )}
     </>
