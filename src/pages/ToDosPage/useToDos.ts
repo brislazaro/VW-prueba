@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Todos } from "../../components/Types/Types";
+import { Todo } from "../../components/Types/Types";
 
 const useToDos = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState<Todos[]>([]);
+  const [data, setData] = useState<Todo[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
