@@ -67,7 +67,7 @@ const PostPage = () => {
           onRow={(record: Post) => {
             return {
               onClick: () => {
-                navigate("/detail");
+                navigate(`/detail/${record.id}`);
               },
             };
           }}
