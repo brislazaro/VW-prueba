@@ -2,11 +2,17 @@ import { Button, Drawer, Form, Space } from "antd";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
-import { Input, Checkbox } from "antd";
+import { Input } from "antd";
 import style from "./PostDetails.module.css";
+import { H } from "vitest/dist/reporters-BECoY4-b.js";
 
 type PostDetailsParams = {
   id: string;
+};
+
+type FormState = {
+  title: string;
+  body: string;
 };
 
 const { TextArea } = Input;
@@ -18,6 +24,10 @@ const PostDetails = () => {
 
   const [open, setOpen] = useState(true);
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [formState, setFormState] = useState<FormState>({
+    title: data?.title || "",
+    body: data?.body || "",
+  });
 
   const onClose = () => {
     setOpen(false);
@@ -25,6 +35,14 @@ const PostDetails = () => {
     setTimeout(() => {
       navigate("/");
     }, 250);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({ ...formState, title: e.target.value });
+  };
+
+  const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormState({ ...formState, body: e.target.value });
   };
 
   return (
@@ -53,10 +71,19 @@ const PostDetails = () => {
         <Form layout="vertical">
           <div className={style.detailContainer}>
             <Form.Item label="Title" style={{ margin: 0 }} required>
-              <Input value={data?.title} disabled={!isEditable} />
+              <Input
+                value={formState.title}
+                disabled={!isEditable}
+                onChange={handleTitleChange}
+              />
             </Form.Item>
             <Form.Item label="Body" style={{ margin: 0 }}>
-              <TextArea rows={5} value={data?.body} disabled={!isEditable} />
+              <TextArea
+                rows={5}
+                value={formState.body}
+                disabled={!isEditable}
+                onChange={handleBodyChange}
+              />
             </Form.Item>
           </div>
         </Form>
