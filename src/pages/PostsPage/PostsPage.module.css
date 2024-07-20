@@ -26,6 +26,10 @@
   margin-top: 50px;
 }
 
+.row {
+  cursor: pointer;
+}
+
 .rowWhite {
   background-color: white;
 }
