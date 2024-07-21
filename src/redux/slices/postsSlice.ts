@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "../../components/Types/Types";
+import toast from "react-hot-toast";
 
 type PostsState = {
   data: Post[];
@@ -31,6 +32,8 @@ export const editPost: any = createAsyncThunk(
     );
 
     const apiData: Post = await response.json();
+
+    toast.success("Post edited successfully");
 
     return apiData;
   }
