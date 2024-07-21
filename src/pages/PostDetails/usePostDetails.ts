@@ -6,8 +6,6 @@ const usePostDetails = (id: string) => {
 
   const selectedPost = posts.find((post) => post.id === Number(id));
 
-  console.log(selectedPost);
-
   return {
     data: selectedPost,
   };

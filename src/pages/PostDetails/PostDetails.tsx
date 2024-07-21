@@ -1,10 +1,11 @@
 import { Button, Drawer, Form, Space } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
 import { Input } from "antd";
 import style from "./PostDetails.module.css";
-import { H } from "vitest/dist/reporters-BECoY4-b.js";
+import { useDispatch } from "react-redux";
+import { editPost } from "../../redux/slices/postsSlice";
 
 type PostDetailsParams = {
   id: string;
@@ -18,16 +19,23 @@ type FormState = {
 const { TextArea } = Input;
 
 const PostDetails = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams<PostDetailsParams>();
   const { data } = usePostDetails(id || "");
 
-  const [open, setOpen] = useState(true);
-  const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [formState, setFormState] = useState<FormState>({
+  const initialState: FormState = {
     title: data?.title || "",
     body: data?.body || "",
-  });
+  };
+
+  const [open, setOpen] = useState(true);
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [formState, setFormState] = useState<FormState>(initialState);
+
+  useEffect(() => {
+    setFormState(initialState);
+  }, [data]);
 
   const onClose = () => {
     setOpen(false);
@@ -37,12 +45,31 @@ const PostDetails = () => {
     }, 250);
   };
 
+  const handleEditOrCancelClick = () => {
+    setIsEditable(!isEditable);
+
+    if (isEditable) {
+      setFormState(initialState);
+    }
+  };
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, title: e.target.value });
   };
 
   const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormState({ ...formState, body: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    dispatch(
+      editPost({
+        title: formState.title,
+        body: formState.body,
+        id: data?.id,
+        userId: data?.userId,
+      })
+    );
   };
 
   return (
@@ -55,12 +82,12 @@ const PostDetails = () => {
         open={open}
         extra={
           <Space>
-            <Button type="primary" onClick={() => setIsEditable(!isEditable)}>
+            <Button type="primary" onClick={handleEditOrCancelClick}>
               {isEditable ? "Cancel" : "Edit"}
             </Button>
             <Button
               type="primary"
-              onClick={() => setIsEditable(!isEditable)}
+              onClick={handleSubmit}
               disabled={!isEditable}
             >
               Save
