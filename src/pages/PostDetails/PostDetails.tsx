@@ -21,8 +21,8 @@ const { TextArea } = Input;
 const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams<PostDetailsParams>();
-  const { data } = usePostDetails(id || "");
+  const { id = "" } = useParams<PostDetailsParams>();
+  const { data } = usePostDetails(id);
 
   const initialState: FormState = {
     title: data?.title || "",
