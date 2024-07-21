@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 const usePostDetails = (id: string) => {
-  const { data, isLoading, isError } = useSelector(
+  const { data, isLoading, isError, isLoadingEdit, isErrorEdit } = useSelector(
     (state: RootState) => state.posts
   );
 
@@ -12,6 +12,8 @@ const usePostDetails = (id: string) => {
     data: selectedPost,
     isLoading,
     isError,
+    isErrorEdit,
+    isLoadingEdit,
   };
 };
 

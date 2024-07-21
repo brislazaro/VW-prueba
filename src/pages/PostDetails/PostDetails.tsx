@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Result, Skeleton, Space } from "antd";
+import { Button, Drawer, Form, Result, Skeleton, Space, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
@@ -7,6 +7,8 @@ import style from "./PostDetails.module.css";
 import { useDispatch } from "react-redux";
 import { editPost } from "../../redux/slices/postsSlice";
 import DrawerSkeleton from "./DrawerSkeleton";
+import { LoadingOutlined } from "@ant-design/icons";
+import toast from "react-hot-toast";
 
 type PostDetailsParams = {
   id: string;
@@ -23,7 +25,8 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id = "" } = useParams<PostDetailsParams>();
-  const { data, isLoading, isError } = usePostDetails(id);
+  const { data, isLoading, isError, isErrorEdit, isLoadingEdit } =
+    usePostDetails(id);
 
   const initialState: FormState = {
     title: data?.title || "",
@@ -73,6 +76,12 @@ const PostDetails = () => {
     );
   };
 
+  useEffect(() => {
+    if (isErrorEdit) {
+      toast.error("There has been an error saving the post");
+    }
+  }, [isErrorEdit]);
+
   return (
     <>
       <Drawer
@@ -89,9 +98,14 @@ const PostDetails = () => {
             <Button
               type="primary"
               onClick={handleSubmit}
-              disabled={!isEditable || formState.title === ""}
+              disabled={!isEditable || formState.title === "" || isLoadingEdit}
+              style={{ width: "70px" }}
             >
-              Save
+              {isLoadingEdit ? (
+                <Spin indicator={<LoadingOutlined spin />} size="small" />
+              ) : (
+                "Save"
+              )}
             </Button>
           </Space>
         }
