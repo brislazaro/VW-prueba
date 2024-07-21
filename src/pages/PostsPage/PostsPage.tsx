@@ -3,10 +3,13 @@ import { Table, Input, Result, Empty } from "antd";
 import styles from "./PostsPage.module.css";
 import { Post } from "../../components/Types/Types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const PostPage = () => {
   const [inputValue, setInputValue] = useState("");
   const { isLoading, isError, data } = usePosts(inputValue);
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -30,7 +33,8 @@ const PostPage = () => {
   ];
 
   const rowClassName = (_: Post, index: number) => {
-    return index % 2 === 0 ? styles.rowWhite : styles.rowGray;
+    const rowStyle = index % 2 === 0 ? styles.rowWhite : styles.rowGray;
+    return `${styles.row} ${rowStyle}`;
   };
   const { Search } = Input;
 
@@ -60,6 +64,13 @@ const PostPage = () => {
           loading={isLoading}
           pagination={{ showSizeChanger: false, position: ["bottomCenter"] }}
           rowClassName={rowClassName}
+          onRow={(record: Post) => {
+            return {
+              onClick: () => {
+                navigate(`/detail/${record.id}`);
+              },
+            };
+          }}
           locale={{
             emptyText: (
               <Empty
@@ -74,6 +85,7 @@ const PostPage = () => {
           }}
         />
       )}
+      <Outlet />
     </>
   );
 };

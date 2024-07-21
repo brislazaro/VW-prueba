@@ -6,12 +6,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PostsPage from "./pages/PostsPage/PostsPage.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
+import PostDetails from "./pages/PostDetails/PostDetails.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ path: "/", element: <PostsPage /> }],
+    children: [
+      {
+        path: "/",
+        element: <PostsPage />,
+        children: [{ path: "/detail/:id", element: <PostDetails /> }],
+      },
+    ],
   },
 ]);
 
