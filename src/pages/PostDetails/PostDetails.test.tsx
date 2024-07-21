@@ -16,6 +16,19 @@ describe("Given a Post Details component", () => {
     userId: 1,
   };
 
+  describe("When isLoading is true", () => {
+    test("Then should print a skeleton component", () => {
+      usePostDetailsMock.mockReturnValue({
+        isLoading: true,
+        isError: false,
+        data: postMock,
+      });
+      renderComponentFactory(<PostDetails />);
+
+      expect(screen.getByTestId("drawerSkeleton")).toBeInTheDocument();
+    });
+  });
+
   describe("When isLoading and isError are false and data is an object", () => {
     test("Then should print a title and body detail", () => {
       usePostDetailsMock.mockReturnValue({

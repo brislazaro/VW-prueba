@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Space } from "antd";
+import { Button, Drawer, Form, Skeleton, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
@@ -6,6 +6,7 @@ import { Input } from "antd";
 import style from "./PostDetails.module.css";
 import { useDispatch } from "react-redux";
 import { editPost } from "../../redux/slices/postsSlice";
+import DrawerSkeleton from "./DrawerSkeleton";
 
 type PostDetailsParams = {
   id: string;
@@ -22,7 +23,7 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id = "" } = useParams<PostDetailsParams>();
-  const { data } = usePostDetails(id);
+  const { data, isLoading, isError } = usePostDetails(id);
 
   const initialState: FormState = {
     title: data?.title || "",
@@ -97,21 +98,27 @@ const PostDetails = () => {
       >
         <Form layout="vertical">
           <div className={style.detailContainer}>
-            <Form.Item label="Title" style={{ margin: 0 }} required>
-              <Input
-                value={formState.title}
-                disabled={!isEditable}
-                onChange={handleTitleChange}
-              />
-            </Form.Item>
-            <Form.Item label="Body" style={{ margin: 0 }}>
-              <TextArea
-                rows={5}
-                value={formState.body}
-                disabled={!isEditable}
-                onChange={handleBodyChange}
-              />
-            </Form.Item>
+            {isError && <p>Error</p>}
+            {!isError && isLoading && <DrawerSkeleton />}
+            {!isError && !isLoading && (
+              <>
+                <Form.Item label="Title" style={{ margin: 0 }} required>
+                  <Input
+                    value={formState.title}
+                    disabled={!isEditable}
+                    onChange={handleTitleChange}
+                  />
+                </Form.Item>
+                <Form.Item label="Body" style={{ margin: 0 }}>
+                  <TextArea
+                    rows={5}
+                    value={formState.body}
+                    disabled={!isEditable}
+                    onChange={handleBodyChange}
+                  />
+                </Form.Item>
+              </>
+            )}
           </div>
         </Form>
       </Drawer>
