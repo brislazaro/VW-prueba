@@ -1,11 +1,11 @@
-import { Button, Drawer, Form, Result, Skeleton, Space, Spin } from "antd";
+import { Button, Drawer, Form, Result, Space, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
 import { Input } from "antd";
 import style from "./PostDetails.module.css";
 import { useDispatch } from "react-redux";
-import { editPost } from "../../redux/slices/postsSlice";
+import { editPost, removePost } from "../../redux/slices/postsSlice";
 import DrawerSkeleton from "./DrawerSkeleton";
 import { LoadingOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
@@ -25,8 +25,16 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id = "" } = useParams<PostDetailsParams>();
-  const { data, isLoading, isError, isErrorEdit, isLoadingEdit } =
-    usePostDetails(id);
+  const {
+    data,
+    isLoading,
+    isError,
+    isErrorEdit,
+    isLoadingEdit,
+    isErrorRemove,
+  } = usePostDetails(id);
+
+  console.log(isErrorRemove);
 
   const initialState: FormState = {
     title: data?.title || "",
@@ -36,10 +44,6 @@ const PostDetails = () => {
   const [open, setOpen] = useState(true);
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [formState, setFormState] = useState<FormState>(initialState);
-
-  useEffect(() => {
-    setFormState(initialState);
-  }, [data]);
 
   const onClose = () => {
     setOpen(false);
@@ -76,11 +80,26 @@ const PostDetails = () => {
     );
   };
 
+  const handleRemove = () => {
+    dispatch(removePost(data?.id));
+    onClose();
+  };
+
+  useEffect(() => {
+    setFormState(initialState);
+  }, [data]);
+
   useEffect(() => {
     if (isErrorEdit) {
       toast.error("There has been an error saving the post");
     }
   }, [isErrorEdit]);
+
+  useEffect(() => {
+    if (isErrorRemove) {
+      toast.error("There has been an error deleting the post");
+    }
+  }, [isErrorRemove]);
 
   return (
     <>
@@ -92,6 +111,14 @@ const PostDetails = () => {
         open={open}
         extra={
           <Space>
+            <Button
+              type="primary"
+              danger
+              disabled={isLoadingEdit}
+              onClick={handleRemove}
+            >
+              Delete
+            </Button>
             <Button type="primary" onClick={handleEditOrCancelClick}>
               {isEditable ? "Cancel" : "Edit"}
             </Button>
