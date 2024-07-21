@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Skeleton, Space } from "antd";
+import { Button, Drawer, Form, Result, Skeleton, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostDetails from "./usePostDetails";
@@ -89,7 +89,7 @@ const PostDetails = () => {
             <Button
               type="primary"
               onClick={handleSubmit}
-              disabled={!isEditable}
+              disabled={!isEditable || formState.title === ""}
             >
               Save
             </Button>
@@ -98,15 +98,32 @@ const PostDetails = () => {
       >
         <Form layout="vertical">
           <div className={style.detailContainer}>
-            {isError && <p>Error</p>}
+            {isError && (
+              <Result
+                status="error"
+                title="Error loading posts"
+                subTitle="There has been an error loading the posts, please try again later."
+              />
+            )}
+
             {!isError && isLoading && <DrawerSkeleton />}
-            {!isError && !isLoading && (
+
+            {!isError && !isLoading && !data && (
+              <Result status="warning" title="There is no post with this id" />
+            )}
+
+            {!isError && !isLoading && data && (
               <>
-                <Form.Item label="Title" style={{ margin: 0 }} required>
+                <Form.Item
+                  label="Title (required)"
+                  style={{ margin: 0 }}
+                  required
+                >
                   <Input
                     value={formState.title}
                     disabled={!isEditable}
                     onChange={handleTitleChange}
+                    status={formState.title === "" ? "error" : ""}
                   />
                 </Form.Item>
                 <Form.Item label="Body" style={{ margin: 0 }}>

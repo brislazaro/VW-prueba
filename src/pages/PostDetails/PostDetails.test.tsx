@@ -29,6 +29,35 @@ describe("Given a Post Details component", () => {
     });
   });
 
+  describe("When isError is true", () => {
+    test("Then should print a error message", () => {
+      usePostDetailsMock.mockReturnValue({
+        isLoading: false,
+        isError: true,
+        data: postMock,
+      });
+      renderComponentFactory(<PostDetails />);
+
+      expect(screen.getByText("Error loading posts")).toBeInTheDocument();
+    });
+  });
+
+  describe("When no data", () => {
+    test("Then should print no data message", () => {
+      usePostDetailsMock.mockReturnValue({
+        isLoading: false,
+        isError: false,
+        data: undefined,
+      });
+      9;
+      renderComponentFactory(<PostDetails />);
+
+      expect(
+        screen.getByText("There is no post with this id")
+      ).toBeInTheDocument();
+    });
+  });
+
   describe("When isLoading and isError are false and data is an object", () => {
     test("Then should print a title and body detail", () => {
       usePostDetailsMock.mockReturnValue({
@@ -154,6 +183,30 @@ describe("Given a Post Details component", () => {
 
         expect(screen.getByDisplayValue("Post title")).toBeInTheDocument();
       });
+    });
+  });
+
+  describe("When the title input is empty", () => {
+    test("Then should disable save button", () => {
+      usePostDetailsMock.mockReturnValue({
+        isLoading: false,
+        isError: false,
+        data: {
+          body: "",
+          id: 1,
+          title: "",
+          userId: 1,
+        },
+      });
+
+      renderComponentFactory(<PostDetails />);
+
+      const button = screen.getByText("Edit");
+      fireEvent.click(button);
+
+      const saveButton = screen.getByText("Save").closest("button");
+
+      expect(saveButton).toBeDisabled();
     });
   });
 });
