@@ -7,6 +7,7 @@ import PostsPage from "./pages/PostsPage/PostsPage.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import PostDetails from "./pages/PostDetails/PostDetails.tsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster />
     </Provider>
   </React.StrictMode>
 );
