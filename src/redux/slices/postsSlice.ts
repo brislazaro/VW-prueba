@@ -68,6 +68,7 @@ const postSlice = createSlice({
     // Edit Post
     builder.addCase(editPost.pending, (state) => {
       state.isLoadingEdit = true;
+      state.isErrorEdit = false;
     });
     builder.addCase(editPost.rejected, (state) => {
       state.isLoadingEdit = false;
