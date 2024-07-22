@@ -43,18 +43,30 @@ describe("Given a Post Details component", () => {
   });
 
   describe("When the post does not exist", () => {
-    test("Then should print no data message", () => {
+    beforeEach(() => {
       usePostDetailsMock.mockReturnValue({
         isLoading: false,
         isError: false,
         data: undefined,
       });
-      9;
-      renderComponentFactory(<PostDetails />);
 
+      renderComponentFactory(<PostDetails />);
+    });
+
+    test("Then should print no data message", () => {
       expect(
         screen.getByText("There is no post with this id")
       ).toBeInTheDocument();
+    });
+
+    test("Then should disable all action buttons", () => {
+      const deleteButton = screen.getByText("Delete").closest("button");
+      const editButton = screen.getByText("Edit").closest("button");
+      const saveButton = screen.getByText("Save").closest("button");
+
+      expect(deleteButton).toBeDisabled();
+      expect(editButton).toBeDisabled();
+      expect(saveButton).toBeDisabled();
     });
   });
 
