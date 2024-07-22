@@ -112,12 +112,17 @@ const PostDetails = () => {
             <Button
               type="primary"
               danger
-              disabled={isLoadingEdit}
+              disabled={isLoadingEdit || data === undefined}
               onClick={handleRemove}
             >
               Delete
             </Button>
-            <Button type="primary" onClick={handleEditOrCancelClick}>
+
+            <Button
+              type="primary"
+              onClick={handleEditOrCancelClick}
+              disabled={isLoadingEdit || data === undefined}
+            >
               {isEditable ? "Cancel" : "Edit"}
             </Button>
             <Button
