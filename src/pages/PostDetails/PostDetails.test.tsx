@@ -42,7 +42,7 @@ describe("Given a Post Details component", () => {
     });
   });
 
-  describe("When no data", () => {
+  describe("When the post does not exist", () => {
     test("Then should print no data message", () => {
       usePostDetailsMock.mockReturnValue({
         isLoading: false,
@@ -59,7 +59,7 @@ describe("Given a Post Details component", () => {
   });
 
   describe("When isLoading and isError are false and data is an object", () => {
-    test("Then should print a title and body detail", () => {
+    beforeEach(() => {
       usePostDetailsMock.mockReturnValue({
         isLoading: false,
         isError: false,
@@ -67,108 +67,49 @@ describe("Given a Post Details component", () => {
       });
 
       renderComponentFactory(<PostDetails />);
+    });
 
+    test("Then should print a title and body detail", () => {
       expect(screen.getByDisplayValue("Post title")).toBeInTheDocument();
       expect(
         screen.getByDisplayValue("Hello my name is brisa")
       ).toBeInTheDocument();
     });
-  });
 
-  describe("When the drawer is opened", () => {
-    test("Then should print edit button", () => {
-      usePostDetailsMock.mockReturnValue({
-        isLoading: false,
-        isError: false,
-        data: postMock,
+    describe("When the drawer is opened", () => {
+      test("Then should print edit button", () => {
+        expect(screen.getByText("Edit")).toBeInTheDocument();
       });
 
-      renderComponentFactory(<PostDetails />);
-
-      expect(screen.getByText("Edit")).toBeInTheDocument();
+      test("Then should dissable inputs", () => {
+        const titleInput = screen.getByDisplayValue("Post title");
+        const bodyInput = screen.getByDisplayValue("Hello my name is brisa");
+        expect(titleInput).toBeDisabled();
+        expect(bodyInput).toBeDisabled();
+      });
     });
 
-    test("Then should dissable inputs", () => {
-      usePostDetailsMock.mockReturnValue({
-        isLoading: false,
-        isError: false,
-        data: postMock,
+    describe("When clicking the edit button", () => {
+      test("Then should print cancel button", () => {
+        const button = screen.getByText("Edit");
+        fireEvent.click(button);
+
+        expect(screen.getByText("Cancel")).toBeInTheDocument();
       });
 
-      renderComponentFactory(<PostDetails />);
+      test("Then should enable inputs", () => {
+        const button = screen.getByText("Edit");
+        fireEvent.click(button);
 
-      const titleInput = screen.getByDisplayValue("Post title");
-      const bodyInput = screen.getByDisplayValue("Hello my name is brisa");
-      expect(titleInput).toBeDisabled();
-      expect(bodyInput).toBeDisabled();
-    });
-  });
-
-  describe("When clicking the edit button", () => {
-    test("Then should print cancel button", () => {
-      usePostDetailsMock.mockReturnValue({
-        isLoading: false,
-        isError: false,
-        data: postMock,
+        const titleInput = screen.getByDisplayValue("Post title");
+        const bodyInput = screen.getByDisplayValue("Hello my name is brisa");
+        expect(titleInput).not.toBeDisabled();
+        expect(bodyInput).not.toBeDisabled();
       });
-
-      renderComponentFactory(<PostDetails />);
-
-      const button = screen.getByText("Edit");
-      fireEvent.click(button);
-
-      expect(screen.getByText("Cancel")).toBeInTheDocument();
     });
 
-    test("Then should enable inputs", () => {
-      usePostDetailsMock.mockReturnValue({
-        isLoading: false,
-        isError: false,
-        data: postMock,
-      });
-
-      renderComponentFactory(<PostDetails />);
-
-      const button = screen.getByText("Edit");
-      fireEvent.click(button);
-
-      const titleInput = screen.getByDisplayValue("Post title");
-      const bodyInput = screen.getByDisplayValue("Hello my name is brisa");
-      expect(titleInput).not.toBeDisabled();
-      expect(bodyInput).not.toBeDisabled();
-    });
-  });
-
-  describe("When modifying the inputs", () => {
-    test("Then should reflect the changes", () => {
-      usePostDetailsMock.mockReturnValue({
-        isLoading: false,
-        isError: false,
-        data: postMock,
-      });
-
-      renderComponentFactory(<PostDetails />);
-
-      const button = screen.getByText("Edit");
-      fireEvent.click(button);
-
-      const titleInput = screen.getByDisplayValue("Post title");
-
-      fireEvent.change(titleInput, { target: { value: "New Title" } });
-
-      expect(screen.getByDisplayValue("New Title")).toBeInTheDocument();
-    });
-
-    describe("And clicking cancel button", () => {
-      test("Then should print the initial value", () => {
-        usePostDetailsMock.mockReturnValue({
-          isLoading: false,
-          isError: false,
-          data: postMock,
-        });
-
-        renderComponentFactory(<PostDetails />);
-
+    describe("When modifying the inputs", () => {
+      test("Then should reflect the changes", () => {
         const button = screen.getByText("Edit");
         fireEvent.click(button);
 
@@ -177,11 +118,24 @@ describe("Given a Post Details component", () => {
         fireEvent.change(titleInput, { target: { value: "New Title" } });
 
         expect(screen.getByDisplayValue("New Title")).toBeInTheDocument();
+      });
 
-        const cancelButton = screen.getByText("Cancel");
-        fireEvent.click(cancelButton);
+      describe("And clicking cancel button", () => {
+        test("Then should print the initial value", () => {
+          const button = screen.getByText("Edit");
+          fireEvent.click(button);
 
-        expect(screen.getByDisplayValue("Post title")).toBeInTheDocument();
+          const titleInput = screen.getByDisplayValue("Post title");
+
+          fireEvent.change(titleInput, { target: { value: "New Title" } });
+
+          expect(screen.getByDisplayValue("New Title")).toBeInTheDocument();
+
+          const cancelButton = screen.getByText("Cancel");
+          fireEvent.click(cancelButton);
+
+          expect(screen.getByDisplayValue("Post title")).toBeInTheDocument();
+        });
       });
     });
   });
