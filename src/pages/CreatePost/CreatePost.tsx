@@ -9,6 +9,7 @@ import { CreatePostReq } from "../../components/Types/Types";
 import useCreatePost from "./useCreatePost";
 import { LoadingOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
+import { resetCreatedPosts } from "../../redux/slices/postsSlice";
 
 type CreateFormState = {
   title: string;
@@ -25,7 +26,7 @@ const CreatePost = () => {
   const [formState, setFormState] = useState<CreateFormState>(initialState);
   const [isTitleTouched, setIsTitleTouched] = useState(false);
 
-  const { isLoadingCreate, isErrorCreate } = useCreatePost();
+  const { isLoadingCreate, isErrorCreate, createdPosts } = useCreatePost();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,6 +65,13 @@ const CreatePost = () => {
       toast.error("There has been an error creating the post");
     }
   }, [isErrorCreate]);
+
+  useEffect(() => {
+    if (createdPosts > 0) {
+      onClose();
+      dispatch(resetCreatedPosts());
+    }
+  }, [createdPosts]);
 
   return (
     <Drawer

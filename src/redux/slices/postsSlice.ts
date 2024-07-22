@@ -12,6 +12,7 @@ type PostsState = {
   isErrorRemove: boolean;
   isLoadingCreate: boolean;
   isErrorCreate: boolean;
+  createdPosts: number;
 };
 
 const initialState: PostsState = {
@@ -24,12 +25,17 @@ const initialState: PostsState = {
   isErrorRemove: false,
   isLoadingCreate: false,
   isErrorCreate: false,
+  createdPosts: 0,
 };
 
 const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCreatedPosts: (state) => {
+      state.createdPosts = 0;
+    },
+  },
   extraReducers: (builder) => {
     // Fetch Post
     builder.addCase(fetchPosts.pending, (state) => {
@@ -117,11 +123,12 @@ const postSlice = createSlice({
         };
 
         state.data.push(newPost);
+        state.createdPosts += 1;
       }
     );
   },
 });
 
-export const actions = postSlice.actions;
+export const { resetCreatedPosts } = postSlice.actions;
 
 export default postSlice.reducer;
