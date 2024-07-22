@@ -9,6 +9,7 @@ import { store } from "./redux/store.ts";
 import PostDetails from "./pages/PostDetails/PostDetails.tsx";
 import { Toaster } from "react-hot-toast";
 import CreatePost from "./pages/CreatePost/CreatePost.tsx";
+import ErrorPage from "./pages/404page/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,10 +24,13 @@ const router = createBrowserRouter([
           { path: "/create", element: <CreatePost /> },
         ],
       },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
