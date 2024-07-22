@@ -18,6 +18,16 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
+Object.defineProperty(window, "getComputedStyle", {
+  value: () => ({
+    getPropertyValue: (prop) => {
+      if (prop === "height") return "0px";
+      if (prop === "width") return "0px";
+      return "";
+    },
+  }),
+});
+
 afterEach(() => {
   cleanup();
 });
