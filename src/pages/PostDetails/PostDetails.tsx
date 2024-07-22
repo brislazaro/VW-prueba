@@ -5,10 +5,10 @@ import usePostDetails from "./usePostDetails";
 import { Input } from "antd";
 import style from "./PostDetails.module.css";
 import { useDispatch } from "react-redux";
-import { editPost, removePost } from "../../redux/slices/postsSlice";
 import DrawerSkeleton from "./DrawerSkeleton";
 import { LoadingOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
+import { editPost, removePost } from "../../redux/thunks";
 
 type PostDetailsParams = {
   id: string;

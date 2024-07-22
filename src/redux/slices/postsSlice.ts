@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "../../components/Types/Types";
-import toast from "react-hot-toast";
+import { createPost, editPost, fetchPosts, removePost } from "../thunks";
 
 type PostsState = {
   data: Post[];
@@ -10,54 +10,9 @@ type PostsState = {
   isErrorEdit: boolean;
   isLoadingRemove: boolean;
   isErrorRemove: boolean;
+  isLoadingCreate: boolean;
+  isErrorCreate: boolean;
 };
-
-// Using any here due to an issue with types and redux-toolkit
-export const fetchPosts: any = createAsyncThunk("fetchPosts", async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const apiData: Post[] = await response.json();
-  return apiData;
-});
-
-export const editPost: any = createAsyncThunk(
-  "editPost",
-  async (updatedPost: Post) => {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${updatedPost.id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(updatedPost),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    );
-
-    const apiData: Post = await response.json();
-
-    toast.success("Post edited successfully");
-
-    return apiData;
-  }
-);
-
-export const removePost: any = createAsyncThunk(
-  "removePost",
-  async (id: number) => {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    await response.json();
-
-    toast.success("Post removed successfully");
-
-    return id;
-  }
-);
 
 const initialState: PostsState = {
   data: [],
@@ -67,6 +22,8 @@ const initialState: PostsState = {
   isErrorEdit: false,
   isLoadingRemove: false,
   isErrorRemove: false,
+  isLoadingCreate: false,
+  isErrorCreate: false,
 };
 
 const postSlice = createSlice({
@@ -90,6 +47,7 @@ const postSlice = createSlice({
         state.data = action.payload;
       }
     );
+
     // Edit Post
     builder.addCase(editPost.pending, (state) => {
       state.isLoadingEdit = true;
@@ -131,6 +89,34 @@ const postSlice = createSlice({
         state.data = state.data.filter((post) => {
           return post.id !== action.payload;
         });
+      }
+    );
+
+    // Create post
+    builder.addCase(createPost.pending, (state) => {
+      state.isLoadingCreate = true;
+      state.isErrorCreate = false;
+    });
+    builder.addCase(createPost.rejected, (state) => {
+      state.isLoadingCreate = false;
+      state.isErrorCreate = true;
+    });
+    builder.addCase(
+      createPost.fulfilled,
+      (state, action: PayloadAction<Post>) => {
+        state.isErrorCreate = false;
+        state.isLoadingCreate = false;
+
+        const lastId = state.data.sort((a, b) => a.id - b.id)[
+          state.data.length - 1
+        ].id;
+
+        const newPost: Post = {
+          ...action.payload,
+          id: lastId + 1,
+        };
+
+        state.data.push(newPost);
       }
     );
   },
