@@ -140,7 +140,7 @@ const PostDetails = () => {
           </Space>
         }
       >
-        <Form layout="vertical">
+        <Form layout="vertical" autoComplete="off">
           <div className={style.detailContainer}>
             {isError && (
               <Result

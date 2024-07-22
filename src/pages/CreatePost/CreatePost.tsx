@@ -93,7 +93,7 @@ const CreatePost = () => {
         </Space>
       }
     >
-      <Form layout="vertical">
+      <Form layout="vertical" autoComplete="off">
         <div className={styles.formContainer}>
           <Form.Item label="Title (required)" style={{ margin: 0 }} required>
             <Input
