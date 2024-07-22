@@ -5,6 +5,10 @@ export type Post = {
   userId: number;
 };
 
+export type PostWithKey = {
+  key: number;
+} & Post;
+
 export type CreatePostReq = {
   body: string;
   title: string;

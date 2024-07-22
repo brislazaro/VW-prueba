@@ -1,4 +1,4 @@
-import { describe, Mock } from "vitest";
+import { Mock } from "vitest";
 import usePosts from "./usePosts";
 import PostsPage from "./PostsPage";
 import { renderComponentFactory } from "../../testUtils";
