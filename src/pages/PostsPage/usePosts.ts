@@ -15,11 +15,13 @@ const usePosts = (inputValue: string) => {
     dispatch(fetchPosts());
   }, []);
 
+  const dataWithKey = data.map((post) => ({ ...post, key: post.id }));
+
   const filteredData = useMemo(() => {
-    return data.filter((item) => {
+    return dataWithKey.filter((item) => {
       return item.title.toLowerCase().includes(inputValue.toLowerCase());
     });
-  }, [data, inputValue]);
+  }, [dataWithKey, inputValue]);
 
   return {
     isError,

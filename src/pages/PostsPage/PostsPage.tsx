@@ -27,7 +27,7 @@ const PostPage = () => {
       key: "id",
       width: 100,
       sorter: (a: Post, b: Post) => a.id - b.id,
-      render: (title: string) => <p data-testId={"post-item"}>{title}</p>,
+      render: (title: string) => <p data-testid={"post-item"}>{title}</p>,
     },
     {
       title: "Title",
