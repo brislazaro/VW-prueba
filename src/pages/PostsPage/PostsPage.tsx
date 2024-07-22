@@ -1,5 +1,5 @@
 import usePosts from "./usePosts";
-import { Table, Input, Result, Empty } from "antd";
+import { Table, Input, Result, Empty, Tooltip } from "antd";
 import styles from "./PostsPage.module.css";
 import { Post } from "../../components/Types/Types";
 import { useState } from "react";
@@ -21,6 +21,7 @@ const PostPage = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      width: 100,
       sorter: (a: Post, b: Post) => a.id - b.id,
       render: (title: string) => <p data-testId={"post-item"}>{title}</p>,
     },
@@ -28,6 +29,14 @@ const PostPage = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (title: any) => (
+        <Tooltip placement="topLeft" title={title}>
+          {title}
+        </Tooltip>
+      ),
       sorter: (a: Post, b: Post) => a.title.localeCompare(b.title),
     },
   ];
@@ -63,6 +72,7 @@ const PostPage = () => {
           columns={columns}
           loading={isLoading}
           pagination={{ showSizeChanger: false, position: ["bottomCenter"] }}
+          style={{ width: 700 }}
           rowClassName={rowClassName}
           onRow={(record: Post) => {
             return {
