@@ -60,12 +60,14 @@ describe("Given a PostsPage component", () => {
         isError: false,
         data: [
           {
+            key: 1,
             body: "body text",
             id: 2,
             title: "do homework",
             userId: 2,
           },
           {
+            key: 2,
             body: "body text",
             id: 3,
             title: "shop shoes",
@@ -85,6 +87,7 @@ describe("Given a PostsPage component", () => {
       const posts = [];
       for (let i = 0; i < 50; i++) {
         posts.push({
+          key: i,
           body: "body text",
           id: i,
           title: "Clean house",
