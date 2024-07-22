@@ -1,5 +1,5 @@
 import usePosts from "./usePosts";
-import { Table, Input, Result, Empty, Tooltip } from "antd";
+import { Table, Input, Result, Empty, Tooltip, Button } from "antd";
 import styles from "./PostsPage.module.css";
 import { Post } from "../../components/Types/Types";
 import { useState } from "react";
@@ -51,13 +51,16 @@ const PostPage = () => {
     <>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>Posts Page</h2>
-        <Search
-          placeholder="Search"
-          enterButton
-          style={{ width: 200 }}
-          value={inputValue}
-          onChange={handleInputChange}
-        />
+        <div className={styles.pageActions}>
+          <Search
+            placeholder="Search"
+            enterButton
+            style={{ width: 300 }}
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <Button type="primary">Add post</Button>
+        </div>
       </div>
 
       {isError ? (

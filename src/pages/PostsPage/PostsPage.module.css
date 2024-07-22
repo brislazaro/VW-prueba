@@ -3,12 +3,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   margin-bottom: 24px;
+  width: 100%;
 }
 
 .title {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+}
+
+.pageActions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .error {
