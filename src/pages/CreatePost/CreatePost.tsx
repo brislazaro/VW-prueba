@@ -1,19 +1,23 @@
-import { Button, Drawer, Form, Input, Space } from "antd";
+import { Button, Drawer, Form, Input, Space, Spin } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CreatePost.module.css";
+import { useDispatch } from "react-redux";
+import { createPost } from "../../redux/thunks";
+import { CreatePostReq } from "../../components/Types/Types";
+import useCreatePost from "./useCreatePost";
+import { LoadingOutlined } from "@ant-design/icons";
+import toast from "react-hot-toast";
 
 type CreateFormState = {
   title: string;
   body: string;
-  userId: string;
 };
 
 const initialState = {
   title: "",
   body: "",
-  userId: "",
 };
 
 const CreatePost = () => {
@@ -21,7 +25,10 @@ const CreatePost = () => {
   const [formState, setFormState] = useState<CreateFormState>(initialState);
   const [isTitleTouched, setIsTitleTouched] = useState(false);
 
+  const { isLoadingCreate, isErrorCreate } = useCreatePost();
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClose = () => {
     setOpen(false);
@@ -43,6 +50,21 @@ const CreatePost = () => {
     setFormState({ ...formState, body: e.target.value });
   };
 
+  const handleSubmit = () => {
+    const createPostPayload: CreatePostReq = {
+      ...formState,
+      userId: Math.floor(Math.random() * 10) + 1,
+    };
+
+    dispatch(createPost(createPostPayload));
+  };
+
+  useEffect(() => {
+    if (isErrorCreate) {
+      toast.error("There has been an error creating the post");
+    }
+  }, [isErrorCreate]);
+
   return (
     <Drawer
       open={open}
@@ -52,9 +74,20 @@ const CreatePost = () => {
       placement="right"
       extra={
         <Space>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="primary" disabled={formState.title === ""}>
-            Save
+          <Button onClick={onClose} disabled={isLoadingCreate}>
+            Cancel
+          </Button>
+          <Button
+            type="primary"
+            disabled={formState.title === "" || isLoadingCreate}
+            onClick={handleSubmit}
+            style={{ width: "70px" }}
+          >
+            {isLoadingCreate ? (
+              <Spin indicator={<LoadingOutlined spin />} size="small" />
+            ) : (
+              "Save"
+            )}
           </Button>
         </Space>
       }
@@ -66,6 +99,7 @@ const CreatePost = () => {
               value={formState.title}
               onChange={handleTitleChange}
               onBlur={handleTitleBlur}
+              disabled={isLoadingCreate}
               status={isTitleTouched && formState.title === "" ? "error" : ""}
             />
           </Form.Item>
@@ -73,6 +107,7 @@ const CreatePost = () => {
             <TextArea
               rows={5}
               value={formState.body}
+              disabled={isLoadingCreate}
               onChange={handleBodyChange}
             />
           </Form.Item>

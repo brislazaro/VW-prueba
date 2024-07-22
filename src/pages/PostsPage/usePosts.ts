@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../../redux/slices/postsSlice";
+
 import { RootState } from "../../redux/store";
+import { fetchPosts } from "../../redux/thunks";
 
 const usePosts = (inputValue: string) => {
   const dispatch = useDispatch();

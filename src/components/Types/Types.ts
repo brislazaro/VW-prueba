@@ -4,3 +4,9 @@ export type Post = {
   title: string;
   userId: number;
 };
+
+export type CreatePostReq = {
+  body: string;
+  title: string;
+  userId: number;
+};
