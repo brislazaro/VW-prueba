@@ -34,8 +34,6 @@ const PostDetails = () => {
     isErrorRemove,
   } = usePostDetails(id);
 
-  console.log(isErrorRemove);
-
   const initialState: FormState = {
     title: data?.title || "",
     body: data?.body || "",
