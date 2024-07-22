@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import PostDetails from "./pages/PostDetails/PostDetails.tsx";
 import { Toaster } from "react-hot-toast";
+import CreatePost from "./pages/CreatePost/CreatePost.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <PostsPage />,
-        children: [{ path: "/detail/:id", element: <PostDetails /> }],
+        children: [
+          { path: "/detail/:id", element: <PostDetails /> },
+          { path: "/create", element: <CreatePost /> },
+        ],
       },
     ],
   },

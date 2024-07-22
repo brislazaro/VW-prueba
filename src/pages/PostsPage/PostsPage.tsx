@@ -16,6 +16,10 @@ const PostPage = () => {
     setInputValue(value);
   };
 
+  const handleCreateClick = () => {
+    navigate("/create");
+  };
+
   const columns = [
     {
       title: "Id",
@@ -59,7 +63,9 @@ const PostPage = () => {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <Button type="primary">Add post</Button>
+          <Button type="primary" onClick={handleCreateClick}>
+            Add post
+          </Button>
         </div>
       </div>
 
