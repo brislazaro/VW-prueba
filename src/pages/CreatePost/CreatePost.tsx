@@ -82,6 +82,7 @@ const CreatePost = () => {
             disabled={formState.title === "" || isLoadingCreate}
             onClick={handleSubmit}
             style={{ width: "70px" }}
+            data-testid="save-button"
           >
             {isLoadingCreate ? (
               <Spin indicator={<LoadingOutlined spin />} size="small" />
@@ -101,6 +102,8 @@ const CreatePost = () => {
               onBlur={handleTitleBlur}
               disabled={isLoadingCreate}
               status={isTitleTouched && formState.title === "" ? "error" : ""}
+              placeholder="Introduce the post title..."
+              name="title"
             />
           </Form.Item>
           <Form.Item label="Body" style={{ margin: 0 }}>
@@ -109,6 +112,8 @@ const CreatePost = () => {
               value={formState.body}
               disabled={isLoadingCreate}
               onChange={handleBodyChange}
+              name="body"
+              placeholder="Introduce the post body..."
             />
           </Form.Item>
         </div>
