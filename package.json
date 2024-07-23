@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +13,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:e2e": "npx playwright test",
-    "test:e2eui": "npx playwright test --ui"
+    "test:e2e:headed": "npx playwright test --headed",
+    "test:e2e:ui": "npx playwright test --ui"
+
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
