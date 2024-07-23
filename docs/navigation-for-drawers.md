@@ -27,7 +27,7 @@ The main page will have children routes (the ones with the drawer) and use the `
 },
 ```
 
-As soon as the child component is rendered, the Drawer will open.
+As soon as the user navigates to a child route (ex: `'/detail/5'`), the component is rendered and the Drawer will open.
 
 Also, to ensure a smooth user experience, the drawer is closed with a small delay before redirecting to the home route. This delay allows for the drawer's closing animation to complete.
 
