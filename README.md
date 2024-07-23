@@ -88,3 +88,4 @@ yarn test:e2e
 Here you have some explainations about the decisions I took while developing the App:
 
 - [Adapter pattern](./docs/adapter-pattern.md)
+- [Navigation for Create and Edit drawers](./docs/navigation-for-drawers.md)
