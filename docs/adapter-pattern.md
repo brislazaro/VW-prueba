@@ -1,14 +1,14 @@
 # Usage of the Adapter Pattern
 
-I used the `Adapter Pattern` in my components using a custom hook.
+In this project, the `Adapter Pattern` is implemented using a custom hook. The primary responsibility of this hook is to fetch and adapt data as needed before providing it to the 
+component.
 
-This hook responsability will be to get the required data for the component, adapt it as needed, and return it to the component.
+## Consistency the Key concept of this pattern
+The hook always returns the same structure and variable names. This design ensures that the component remains unaware of the data's origin. Consequently, changes in data sources or structures do not affect the component or its tests, simplifying refactoring and testing.
 
-The key point of this hook is to **always return the same structure and variable names**. 
-This way, the component does not know where the data is comming from, and so, if that changes, the component and the test stays the same without breaking.
-Making it easier to possible refactors and to test.
+## Example implementation
 
-For a simple component without much logic like [PostsPage](../src/pages/PostsPage/PostsPage.tsx), the hook will always return the following structure:
+For a simple component like [PostsPage](../src/pages/PostsPage/PostsPage.tsx), the hook provides the following structure:
 
 ```js
 {
@@ -23,12 +23,14 @@ And the component will use it like this:
 const {isLoading, isError, data} = usePostsPage()
 ```
 
-# What is achieved using this pattern
+# Benefits of Using the Adapter Pattern
+1. **Better maintainability**
+   - Changes in data fetching methods or storage (e.g., from local state to Redux) do not require modifications to the component or its tests.
+   - Example: Refactoring demonstrated in [this commit](https://github.com/brislazaro/VW-prueba/commit/0a6a3f6d1d8947296c68f3a0cc61579871aeea4b) shows how the component and its tests remained unchanged after data source adjustments.
+2. **Improved testability**
+   - Components are decoupled from data fetching and adaptation, reducing the need for extensive mocks.
+   - You only need to mock the hook's return value, which simplifies testing various component states.
 
-- **Better maintainability**: If we change how we fetch the data, or where we store it (ex: from local state to Redux), the component and it's test don't need to change. As the hook will get the data and return it with the same structure.
-  - See an example of how easy it was to refactor in [this commit](https://github.com/brislazaro/VW-prueba/commit/0a6a3f6d1d8947296c68f3a0cc61579871aeea4b)
-  - After it, the component test and code didn't change at all. **Small, simple and safe**
-- **Better testability**: As the component is agnostic to how we fetch and where we get the data from, we reduce the `mocks` we need to write. We just need to mock the return value of the hook and test all the possible states of the component
 ```js 
   usePostsMock.mockReturnValue({
         isLoading: true,
@@ -36,6 +38,8 @@ const {isLoading, isError, data} = usePostsPage()
         data: [],
       }); 
 ```
-- **Standarized way of writting code for pages**: All the pages will use the same pattern, so the code is easier to understand and navigate.
-- **Separation of concerns**: The components are responsible to handle all things UI related, while the hook fetches the data and adapts it to the component.
+3. **Standardized Code Structure**: 
+   - Consistent use of the pattern across all pages enhances code readability and maintainability.
+4. **Separation of concerns**: 
+   - Components focus solely on UI responsibilities, while the hook handles data fetching and adaptation.
  
