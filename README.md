@@ -1,31 +1,66 @@
-# React + TypeScript + Vite
+# VW Test by Brisa Lazaro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a project bootstraped using vite and built with React + TypeScript.
 
-Currently, two official plugins are available:
+Node version used: 20.15.1.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Here are the most important libraries and technologies used in the project:
 
-## Expanding the ESLint configuration
+- **Redux**: To handle the App global state.
+- **Antd** (ant design): As a css component library.
+- **Vitest & React Testing Library**: To write unit tests for the App.
+- **Playwright**: To write E2E tests for the most complex use cases of the App.
+- **css modules**: For having scoped styles.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## How to run locally
 
-- Configure the top-level `parserOptions` property like this:
+First make sure to use at least **node v20** to ensure the project works.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+1- Install the project dependencies
+
+```bash
+// using npm
+npm install
+
+// using yarn
+yarn install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# VW-prueba
+2- Run the "dev" script to start the project
+
+```bash
+// using npm
+npm run dev
+
+// using yarn
+yarn dev
+```
+
+## How to run tests
+
+### Unit tests
+
+- Run the "test" command
+
+```bash
+npm run test
+
+yarn test
+```
+
+### E2E tests
+
+- Run the project locally using the steps above (make sure the project is running at port `5173`)
+- Run the "test:e2e" command to run them.
+
+```bash
+npm run test:e2e
+
+yarn test:e2e
+```
+
+## Important project documentation
+
+Here you have some explainations about the decisions I took while developing the App:
+
+- WIP
