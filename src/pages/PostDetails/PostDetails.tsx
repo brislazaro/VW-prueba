@@ -168,6 +168,7 @@ const PostDetails = () => {
                     disabled={!isEditable}
                     onChange={handleTitleChange}
                     status={formState.title === "" ? "error" : ""}
+                    placeholder="Enter post title..."
                   />
                 </Form.Item>
                 <Form.Item label="Body" style={{ margin: 0 }}>

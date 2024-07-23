@@ -6,7 +6,7 @@ const Header: FC = () => {
   return (
     <header className={style.header}>
       <img src={logo} alt="logo" className={style.logo} />
-      <h1> VW technical test</h1>
+      <h1>VW technical test</h1>
     </header>
   );
 };
