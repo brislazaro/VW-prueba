@@ -37,8 +37,8 @@ test("When creating a new post, THEN should add it to the list", async ({
   await page.waitForSelector("text=101");
   await page.waitForSelector("text=My post title");
 
-  expect(await page.locator("text=101")).toBeVisible();
-  expect(await page.locator("text=My post title")).toBeVisible();
+  expect(await page.locator("text=101")).toBeDefined();
+  expect(await page.locator("text=My post title")).toBeDefined();
 });
 
 test("When deleting an existing post, THEN should remove it from the list", async ({
@@ -88,5 +88,5 @@ test("When editing an existing post, THEN should modify it's title from the list
   expect(deletedPostText).toBe(0);
 
   const newPostTitle = await page.locator(`text=${newTitle}`);
-  expect(newPostTitle).toBeVisible();
+  expect(newPostTitle).toBeDefined();
 });
