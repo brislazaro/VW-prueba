@@ -11,6 +11,7 @@
   - [Unit tests](#unit-tests)
   - [E2E tests](#e2e-tests)
 - [Important project documentation](#important-project-documentation)
+- [Future improvements](#future-improvements)
 
 # General
 
@@ -89,3 +90,9 @@ Here you have some explainations about the decisions I took while developing the
 
 - [Adapter pattern](./docs/adapter-pattern.md)
 - [Navigation for Create and Edit drawers](./docs/navigation-for-drawers.md)
+
+# Future improvements
+
+If I had more time to develop this project I would focus on the following:
+ - **Ant design console error on form change**: Something from ant design is causing an error to the console at some times when changing the inputs. I'd like to investigate what's causing it and fix that.
+ - **Async thunks TS error**: In the file [thunks.ts](./src/redux/thunks.ts), I had to use some `any` types, as TS was throwing an error, but due to time limitations I decided to continue and focus on that later as I couldn't find a propper solution for it.
