@@ -14,6 +14,7 @@
   - [Unit tests](#unit-tests)
   - [E2E tests](#e2e-tests)
 - [Important project documentation](#important-project-documentation)
+- [](#)
 - [Future improvements](#future-improvements)
 
 # Project overview
@@ -92,6 +93,8 @@ Here you have some explainations about the decisions I took while developing the
 
 - [Adapter pattern](./docs/adapter-pattern.md)
 - [Navigation for Create and Edit drawers](./docs/navigation-for-drawers.md)
+
+# 
 
 # Future improvements
 
